@@ -1,0 +1,11 @@
+{
+  "name": "PriceMaster - Precificação",
+  "short_name": "PriceMaster",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#7c3aed",
+  "icons": [
+    { "src": "https://cdn-icons-png.flaticon.com/512/2632/2632290.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#7c3aed">
+    <title>PriceMaster - Precificação Inteligente</title>
+    <link rel="manifest" href="manifest.json">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .input-card { background: white; border: 1px solid #e2e8f0; padding: 1.5rem; border-radius: 1.5rem; }
+        body { -webkit-tap-highlight-color: transparent; }
+    </style>
+</head>
+<body class="bg-slate-50 pb-10 font-sans">
+
+    <header class="bg-white border-b p-5 sticky top-0 z-30">
+        <div class="max-w-md mx-auto flex justify-between items-center">
+            <h1 class="text-xl font-black text-purple-700 tracking-tighter italic">PRICE<span class="text-slate-800">MASTER</span></h1>
+            <i data-lucide="calculator" class="text-slate-400 w-5 h-5"></i>
+        </div>
+    </header>
+
+    <main class="max-w-md mx-auto p-4 space-y-6">
+        
+        <section class="input-card space-y-4">
+            <h3 class="text-[10px] font-black text-purple-600 uppercase tracking-widest">Passo 1: Seu Custo de Vida</h3>
+            <div class="space-y-3">
+                <input type="number" id="fixed-costs" placeholder="Custos Fixos Totais (R$)" class="w-full p-4 bg-slate-50 rounded-2xl outline-none border focus:border-purple-500">
+                <div class="grid grid-cols-2 gap-3">
+                    <input type="number" id="work-hours" placeholder="Horas/mês" class="p-4 bg-slate-50 rounded-2xl outline-none border focus:border-purple-500">
+                    <input type="number" id="desired-profit" placeholder="Lucro Desejado %" class="p-4 bg-slate-50 rounded-2xl outline-none border focus:border-purple-500">
+                </div>
+            </div>
+            <div class="p-3 bg-purple-50 rounded-xl text-center">
+                <p class="text-[10px] font-bold text-purple-400 uppercase">Sua Hora de Custo</p>
+                <p id="hour-value" class="text-lg font-black text-purple-700 text-center">R$ 0,00</p>
+            </div>
+        </section>
+
+        <section class="input-card space-y-4">
+            <h3 class="text-[10px] font-black text-purple-600 uppercase tracking-widest">Passo 2: O Serviço</h3>
+            <div class="space-y-3">
+                <input type="number" id="service-time" placeholder="Tempo p/ realizar (Horas)" class="w-full p-4 bg-slate-50 rounded-2xl outline-none border focus:border-purple-500">
+                <input type="number" id="variable-costs" placeholder="Materiais/Taxas (R$)" class="w-full p-4 bg-slate-50 rounded-2xl outline-none border focus:border-purple-500">
+            </div>
+            <button onclick="calculatePrice()" class="w-full bg-purple-600 text-white p-5 rounded-2xl font-black uppercase tracking-widest shadow-lg shadow-purple-200 active:scale-95 transition-all">Calcular Preço</button>
+        </section>
+
+        <div id="result-card" class="hidden bg-slate-900 rounded-[2.5rem] p-8 text-white shadow-2xl space-y-6 relative overflow-hidden animate-in">
+            <div class="text-center relative z-10">
+                <p class="text-slate-400 text-[10px] font-bold uppercase tracking-widest">Preço Mínimo Recomendado</p>
+                <h2 id="final-price" class="text-5xl font-black my-2 tracking-tighter text-purple-400">R$ 0,00</h2>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4 border-t border-white/10 pt-6 relative z-10 text-[10px] uppercase font-bold">
+                <div class="text-center">
+                    <p class="text-slate-500">Custo de Mão de Obra</p>
+                    <p id="cost-labor" class="text-sm text-white">R$ 0,00</p>
+                </div>
+                <div class="text-center">
+                    <p class="text-slate-500">Lucro Líquido</p>
+                    <p id="net-profit" class="text-sm text-emerald-400">R$ 0,00</p>
+                </div>
+            </div>
+            <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-purple-600/20 rounded-full blur-3xl"></div>
+        </div>
+
+    </main>
+
+    <script src="script.js"></script>
+    <script>lucide.createIcons();</script>
+</body>
+</html>
