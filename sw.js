@@ -1,18 +1,22 @@
-const CACHE_NAME = 'pricemaster-v1';
+const CACHE_NAME = 'pricemaster-v2'; // [Ajuste]: Versão atualizada para forçar novo cache
 const ASSETS = [
   './',
   './index.html',
   './script.js',
   './manifest.json',
   'https://cdn.tailwindcss.com',
-  // Usando a versão estável da Lucide para evitar erros de redirecionamento no cache
   'https://unpkg.com/lucide@0.454.1/dist/lucide.min.js'
 ];
 
 self.addEventListener('install', e => {
-  self.skipWaiting(); // Força a atualização imediata
+  self.skipWaiting();
   e.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS))
+    caches.open(CACHE_NAME).then(cache => {
+      // [Ajuste]: Promise.allSettled evita que o cache falhe se um arquivo demorar a responder
+      return Promise.allSettled(
+        ASSETS.map(url => cache.add(url))
+      );
+    })
   );
 });
 
@@ -24,13 +28,13 @@ self.addEventListener('activate', e => {
       );
     })
   );
-  self.clients.claim(); // Assume o controle do app na hora
+  self.clients.claim();
 });
 
-// Estratégia "Network First": Tenta buscar o código novo no Vercel. 
-// Se o cliente estiver sem internet (offline), o Cache assume instantaneamente.
+// [Ajuste]: Estratégia Network-First otimizada
 self.addEventListener('fetch', e => {
   e.respondWith(
-    fetch(e.request).catch(() => caches.match(e.request))
+    fetch(e.request)
+      .catch(() => caches.match(e.request))
   );
 });
